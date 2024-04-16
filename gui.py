@@ -6,7 +6,6 @@ from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain import PromptTemplate
 
-OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
 
 st.set_page_config(page_title="Document Genie", layout="wide")
 st.markdown("""## History Chatbot""")
