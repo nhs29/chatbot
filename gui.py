@@ -5,7 +5,9 @@ from langchain_openai import OpenAIEmbeddings, OpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain import PromptTemplate
+from getpass import getpass
 
+OPENAI_API_KEY = getpass()
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 
 st.set_page_config(page_title="Document Genie", layout="wide")
