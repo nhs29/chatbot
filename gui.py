@@ -6,6 +6,8 @@ from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain import PromptTemplate
 
+OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
+
 st.set_page_config(page_title="Document Genie", layout="wide")
 st.markdown("""## History Chatbot""")
 
@@ -25,9 +27,7 @@ if __name__ == "__main__":
     llm = OpenAI(temperature=0.5)
     memory = ConversationBufferMemory(llm=llm, memory_key="chat_history", output_key='answer', return_messages=True)
 
-    key = st.text_input("API key")
-    if key:
-        os.environ["OPENAI_API_KEY"] = key
+
     question = st.text_input("Ask a question")
     if question:
         chain = ConversationalRetrievalChain.from_llm(llm, retriever=retriever, memory=memory,
