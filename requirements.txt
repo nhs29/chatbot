@@ -1,0 +1,6 @@
+langchain_openai
+openai
+langchain
+sentence-transformers
+tiktoken
+faiss-cpu
