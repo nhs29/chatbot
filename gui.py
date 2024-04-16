@@ -10,8 +10,6 @@ from langchain import PromptTemplate
 st.set_page_config(page_title="Document Genie", layout="wide")
 st.markdown("""## Document Genie: Get instant insights from your Documents...""")
 
-os.environ["OPENAI_API_KEY"] = "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"
-
 vectorstore = FAISS.load_local("faiss_store (4)", OpenAIEmbeddings(), allow_dangerous_deserialization=True)
 retriever = vectorstore.as_retriever()
 
@@ -35,6 +33,9 @@ def ask(question):
 
 
 if __name__ == "__main__":
-    question = st.text_input("Ask a question")
-    if question:
-        ask(question)
+    key = st.text_input("API key")
+    if key:
+        os.environ["OPENAI_API_KEY"] = key
+        question = st.text_input("Ask a question")
+        if question:
+            ask(question)
