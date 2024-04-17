@@ -21,7 +21,6 @@ template = """You are a helpful assistant.
     New question: {question}
     Helpful answer:"""
 prompt = PromptTemplate.from_template(template)
-llm = OpenAI(temperature=0.5)
 
 if __name__ == "__main__":
     memory = ConversationBufferMemory(llm=llm, memory_key="chat_history", output_key='answer', return_messages=True)
@@ -30,6 +29,7 @@ if __name__ == "__main__":
     question = st.text_input("Ask a question")
     if key and question:
         os.environ["OPENAI_API_KEY"] = key
+        llm = OpenAI(temperature=0.5)
         chain = ConversationalRetrievalChain.from_llm(llm, retriever=retriever, memory=memory,
                                                       combine_docs_chain_kwargs={"prompt": prompt}, verbose=True,
                                                       rephrase_question=False)
