@@ -7,7 +7,7 @@ from langchain.chains import ConversationalRetrievalChain
 from langchain import PromptTemplate
 
 
-llm = OpenAI(temperature=0.5, openai_api_key=OPENAI_API_KEY)
+
 st.set_page_config(page_title="Document Genie", layout="wide")
 st.markdown("""## History Chatbot""")
 
@@ -21,7 +21,7 @@ template = """You are a helpful assistant.
     New question: {question}
     Helpful answer:"""
 prompt = PromptTemplate.from_template(template)
-
+llm = OpenAI(temperature=0.5)
 
 if __name__ == "__main__":
     memory = ConversationBufferMemory(llm=llm, memory_key="chat_history", output_key='answer', return_messages=True)
