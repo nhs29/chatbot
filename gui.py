@@ -26,9 +26,10 @@ prompt = PromptTemplate.from_template(template)
 if __name__ == "__main__":
     memory = ConversationBufferMemory(llm=llm, memory_key="chat_history", output_key='answer', return_messages=True)
 
-
+    key = st.text_input("API key")
     question = st.text_input("Ask a question")
-    if question:
+    if key and question:
+        os.environ["OPENAI_API_KEY"] = key
         chain = ConversationalRetrievalChain.from_llm(llm, retriever=retriever, memory=memory,
                                                       combine_docs_chain_kwargs={"prompt": prompt}, verbose=True,
                                                       rephrase_question=False)
