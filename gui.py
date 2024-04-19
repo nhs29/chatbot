@@ -5,7 +5,6 @@ from langchain_openai import OpenAIEmbeddings, OpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain import PromptTemplate
-import config
 
 os.environ["OPENAI_API_KEY"] = st.secrets['OPENAI_API_KEY']
 llm = OpenAI(temperature=0.5)
@@ -35,7 +34,7 @@ else:
     for message in st.session_state.chat_history:
         memory.save_context({"question": message["human"]}, {"answer": message["assistant"]})
 
-question = st.text_input("Ask a question")
+question = st.chat_input("Ask a question")
 if question:
     response = chain({"question": question})
     message = {"human": question, "assistant": response["answer"]}
