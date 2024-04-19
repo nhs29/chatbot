@@ -33,7 +33,7 @@ if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 else:
     for message in st.session_state.chat_history:
-        memory.save_context({"input": message["human"]}, {"output": message["assistant"]})
+        memory.save_context({"question": message["human"]}, {"answer": message["assistant"]})
 
 question = st.text_input("Ask a question")
 if question:
