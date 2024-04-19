@@ -5,10 +5,9 @@ from langchain_openai import OpenAIEmbeddings, OpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain import PromptTemplate
-import config
 
 
-os.environ["OPENAI_API_KEY"] = config.OPENAI_API_KEY
+os.environ["OPENAI_API_KEY"] = st.secrets['OPENAI_API_KEY']
 llm = OpenAI(temperature=0.5)
 
 
