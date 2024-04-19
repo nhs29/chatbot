@@ -5,14 +5,10 @@ from langchain_openai import OpenAIEmbeddings, OpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain import PromptTemplate
-
+import config
 
 os.environ["OPENAI_API_KEY"] = st.secrets['OPENAI_API_KEY']
 llm = OpenAI(temperature=0.5)
-
-
-st.set_page_config(page_title="Document Genie", layout="wide")
-st.markdown("""## History Chatbot""")
 
 vectorstore = FAISS.load_local("faiss_store (4)", OpenAIEmbeddings(), allow_dangerous_deserialization=True)
 retriever = vectorstore.as_retriever()
@@ -25,13 +21,23 @@ template = """You are a helpful assistant.
     Helpful answer:"""
 prompt = PromptTemplate.from_template(template)
 
-if __name__ == "__main__":
-    question = st.text_input("Ask a question")
-    if question:
+memory = ConversationBufferMemory(llm=llm, memory_key="chat_history", output_key='answer', return_messages=True)
+chain = ConversationalRetrievalChain.from_llm(llm, retriever=retriever, memory=memory,
+                                              combine_docs_chain_kwargs={"prompt": prompt}, verbose=True,
+                                              rephrase_question=False)
 
-        memory = ConversationBufferMemory(llm=llm, memory_key="chat_history", output_key='answer', return_messages=True)
-        chain = ConversationalRetrievalChain.from_llm(llm, retriever=retriever, memory=memory,
-                                                      combine_docs_chain_kwargs={"prompt": prompt}, verbose=True,
-                                                      rephrase_question=False)
-        response = chain({"question": question})
-        st.write(response["answer"].strip())
+st.set_page_config(page_title="Document Genie", layout="wide")
+st.markdown("""## History Chatbot""")
+
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []
+else:
+    for message in st.session_state.chat_history:
+        memory.save_context({"input": message["human"]}, {"output": message["assistant"]})
+
+question = st.text_input("Ask a question")
+if question:
+    response = chain({"question": question})
+    message = {"human": question, "assistant": response["answer"]}
+    st.session_state.chat_history.append(message)
+    st.write(response["answer"].strip())
