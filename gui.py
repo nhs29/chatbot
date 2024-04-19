@@ -34,6 +34,7 @@ else:
     for message in st.session_state.chat_history:
         memory.save_context({"question": message["human"]}, {"answer": message["assistant"]})
 
+
 question = st.chat_input("Ask a question")
 if question:
     response = chain({"question": question})
@@ -41,7 +42,7 @@ if question:
     st.session_state.chat_history.append(message)
     for messages in st.session_state.chat_history:
         with st.chat_message("human"):
-            st.write(messages["human"])
+            st.write_stream(messages["human"])
         with st.chat_message("assistant"):
-            st.write(messages["assistant"])
+            st.write_stream(messages["assistant"])
 
