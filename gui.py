@@ -25,7 +25,7 @@ chain = ConversationalRetrievalChain.from_llm(llm, retriever=retriever, memory=m
                                               combine_docs_chain_kwargs={"prompt": prompt}, verbose=True,
                                               rephrase_question=False)
 
-st.set_page_config(page_title="History Chatbot", layout="wide")
+st.set_page_config(page_title="History Chatbot")
 st.markdown("""## History Chatbot""")
 
 if "chat_history" not in st.session_state:
