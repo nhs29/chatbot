@@ -38,9 +38,10 @@ question = st.chat_input("Ask a question")
 if question:
     response = chain({"question": question})
     message = {"human": question, "assistant": response["answer"]}
-    with st.chat_message("human"):
-        st.write(question)
-    with st.chat_message("assistant"):
-        st.write(response["answer"].strip())
     st.session_state.chat_history.append(message)
+    for messages in st.session_state.chat_history:
+        with st.chat_message("human"):
+            st.write(messages["human"])
+        with st.chat_message("assistant"):
+            st.write(messages["assistant"])
 
