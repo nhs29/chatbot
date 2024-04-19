@@ -42,7 +42,7 @@ if question:
     st.session_state.chat_history.append(message)
     for messages in st.session_state.chat_history:
         with st.chat_message("human"):
-            st.write_stream(messages["human"])
+            st.write(messages["human"])
         with st.chat_message("assistant"):
-            st.write_stream(messages["assistant"])
+            st.write(messages["assistant"])
 
