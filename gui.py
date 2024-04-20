@@ -28,6 +28,14 @@ chain = ConversationalRetrievalChain.from_llm(llm, retriever=retriever, memory=m
 st.set_page_config(page_title="History Chatbot")
 st.markdown("""## History Chatbot""")
 
+hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 else:
