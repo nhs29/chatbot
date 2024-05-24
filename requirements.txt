@@ -1,4 +1,5 @@
 langchain_openai
+langchain-community
 openai
 langchain
 sentence-transformers
