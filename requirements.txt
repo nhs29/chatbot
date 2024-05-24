@@ -1,7 +1,7 @@
-langchain_openai
-langchain-community
-openai
-langchain
-sentence-transformers
-tiktoken
-faiss-cpu
+langchain_openai==0.1.7
+langchain-community==0.2.1
+openai==1.30.2
+langchain==0.2.1
+sentence-transformers==2.7.0
+tiktoken==0.7.0
+faiss-cpu==1.8.0
