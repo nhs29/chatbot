@@ -9,13 +9,9 @@ from langchain import PromptTemplate
 os.environ["OPENAI_API_KEY"] = st.secrets['OPENAI_API_KEY']
 llm = OpenAI(temperature=0.5)
 
-@st.cache_data
-def load_vs():
-    global retriever
-    vectorstore = FAISS.load_local("faiss_store (4)", OpenAIEmbeddings(), allow_dangerous_deserialization=True)
-    retriever = vectorstore.as_retriever()
+vectorstore = FAISS.load_local("faiss_store (4)", OpenAIEmbeddings(), allow_dangerous_deserialization=True)
+retriever = vectorstore.as_retriever()
 
-load_vs()
 
 template = """You are a helpful assistant.
     Use the following pieces of context, if needed, to answer the input at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.
