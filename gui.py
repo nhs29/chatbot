@@ -11,6 +11,7 @@ llm = OpenAI(temperature=0.5)
 
 @st.cache_data
 def load_vs():
+    global retriever
     vectorstore = FAISS.load_local("faiss_store (4)", OpenAIEmbeddings(), allow_dangerous_deserialization=True)
     retriever = vectorstore.as_retriever()
 
